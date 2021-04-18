@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block container %}
+<main class="container mt-3">
+    <div class="row mt-5">
+        <div class="col-10 col-md-6 offset-1 offset-md-3 mb-3">
+            <form action="{{ request.path }}" class="card mb-3" method="post">
+                {{ form.hidden_tag() }}
+                <div class="card-body text-center pt-5">
+                    <img src="{{ teacher.picture }}" class="mb-3" width="95" alt="">
+                    <h2 class="h5 card-title mt-2 mb-2">{{ teacher.name }}</h2>
+                    <p class="my-1">Запись на пробный урок</p>
+                    <p class="my-1">{{ day_booking[0] }}, {{ form.time.data }}:00</p>
+                </div>
+                <hr/>
+                <div class="card-body mx-3">
+                    <div class="row">
+                        {{ form.weekday(class_="form-control") }}
+                        {{ form.time(class_="form-control") }}
+                        {{ form.teacher(class_="form-control") }}
+                    </div>
+                    {{ form.name.label(class_="mb-1 mt-2") }}
+                    {% if form.name.errors %}
+                        {{ form.name(class_="invalid", placeholder="Имя") }}
+                        {% for err in form.name.errors %}
+                            <p class="alert-warning">{{ err }}</p>
+                        {% endfor %}
+                    {% else %}
+                        {{ form.name(class_="form-control", placeholder="Имя") }}
+                    {% endif %}
+                    {{ form.phone.label(class_="mb-1 mt-2") }}
+                    {% if form.phone.errors %}
+                        {{ form.phone(class_="invalid", placeholder="+7-9ХХ-ХХХ-ХХ-ХХ") }}
+                        {% for err in form.phone.errors %}
+                            <p class=alert-warning">{{ err }}</p>
+                        {% endfor %}
+                    {% else %}
+                        {{ form.phone(class_="form-control", placeholder="+7-9ХХ-ХХХ-ХХ-ХХ") }}
+                    {% endif %}
+                    {{ form.submit(class_="btn btn-primary btn-block mt-4") }}
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

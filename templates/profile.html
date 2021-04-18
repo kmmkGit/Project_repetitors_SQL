@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block container %}
+<main class="container mt-3">
+    <div class="card my-4 mx-auto">
+        <div class="card-body m-2 m-md-4">
+            <article class="row">
+                <div class="col-5"><img src="{{ teacher.picture }}" class="img-fluid" alt=""></div>
+                <div class="col-7">
+
+                    <section class="teacher=info">
+
+                        <h1 class="h2">{{ teacher.name }}</h1>
+                        <p>
+                            {% for goal in teacher.goals %}
+                            <span class="badge badge-secondary mr-2">{{ goals[goal][0] }} </span>
+                            {% endfor -%}
+                            Рейтинг: {{ teacher.rating}}
+                            Ставка: {{ teacher.price }} / час</p>
+                        <p>{{ teacher.about }}</p>
+
+                    </section>
+
+                    <section class="available">
+
+                        <h4 class="mb-4 mt-5">Записаться на пробный урок</h4>
+                        {% for day_today, day_name in days_of_week.items() %}
+                        <h6 class="mt-4">{{ day_name[0] }}</h6>
+                        {% set ns = namespace(no_free_time = true) %}
+                        {% for free_time, free_flag in teacher.free[day_today].items() %}
+                        {% if free_flag %}
+                        {% set ns.no_free_time = false %}
+                        <a href="/booking/{{ teacher.id }}/{{ day_name[1] }}/{{ free_time[0:free_time|length-3] }}/"
+                           class="btn btn-outline-success mr-2">{{ free_time }} свободно</a>
+                        {% endif %}
+                        {% endfor %}
+                        {% if ns.no_free_time %}
+                        <p>Нет свободных уроков</p>
+                        {% endif %}
+                        {% endfor %}
+
+                    </section>
+
+                </div>
+            </article>
+        </div>
+
+    </div>
+</main>
+
+{% endblock %}

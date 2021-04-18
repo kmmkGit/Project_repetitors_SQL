@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block container %}
+<main class="container mt-5">
+    <div class="col-12 col-sm-10 col-lg-6 offset-lg-3 offset-sm-1">
+        <form action="/request/" method="POST" class="card mb-5">
+            {{ form.hidden_tag() }}
+            <div class="card-body text-center pt-5">
+                <h1 class="h3 card-title mt-4 mb-2">Подбор преподавателя</h1>
+                <p class="px-5">Напишите, чего вам нужно и мы подберем отличных ребят</p>
+            </div>
+            <hr>
+            <div class="card-body mx-3">
+                <div class="row">
+                    <div class="col">
+                        <p>{{ form.goal.label }}</p>
+                        {% for goal in form.goal %}
+                        <div class="form-check ">
+                            {{ goal(class_="form-check-input") }}
+                            {{ goal.label(class_="form-check-label") }}
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                    <div class="col">
+                        <p>{{ form.time.label }}</p>
+                        {% for time in form.time %}
+                        <div class="form-check ">
+                            {{ time(class_="form-check-input") }}
+                            {{ time.label(class_="form-check-label") }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="card-body mx-3">
+                {{ form.name.label(class_="mb-1 mt-2") }}
+                {% if form.name.errors %}
+                    {{ form.name(class_="invalid", placeholder="Имя") }}
+                        {% for err in form.name.errors %}
+                              <p class="alert-warning">{{ err }}</p>
+                        {% endfor %}
+                {% else %}
+                    {{ form.name(class_="form-control", placeholder="Имя") }}
+                {% endif %}
+                {{ form.phone.label(class_="mb-1 mt-2") }}
+                {% if form.phone.errors %}
+                    {{ form.phone(class_="invalid", placeholder="+7-9ХХ-ХХХ-ХХ-ХХ") }}
+                        {% for err in form.phone.errors %}
+                            <p class=alert-warning">{{ err }}</p>
+                        {% endfor %}
+                {% else %}
+                    {{ form.phone(class_="form-control", placeholder="+7-9ХХ-ХХХ-ХХ-ХХ") }}
+                {% endif %}
+                {{ form.submit(class_="btn btn-primary mt-4 mb-2") }}
+            </div>
+        </form>
+    </div>
+</main>
+
+{% endblock %}
