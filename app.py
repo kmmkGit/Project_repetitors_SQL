@@ -8,6 +8,8 @@ from sqlalchemy.dialects.postgresql import JSON
 app = Flask(__name__)
 app.secret_key = os.urandom(40)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+#    "postgresql+psycopg2://postgres:Maxim@127.0.0.1:5432/postgresdb"
+#    os.environ.get("DATABASE_URL")
 #    'sqlite:///test_my.db'
 #    os.environ.get("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
